@@ -9,7 +9,8 @@
     "start": "node dist/server.js",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev",
-    "prisma:seed": "npx tsx prisma/seed.ts"
+    "prisma:seed": "npx tsx prisma/seed.ts",
+    "db:push": "npx prisma db push"
   },
   "keywords": [],
   "author": "",
