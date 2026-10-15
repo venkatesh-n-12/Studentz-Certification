@@ -17,10 +17,12 @@ export interface Opportunity {
   duration: string;
   mode: Mode;
   location?: string;
+  registrationUrl?: string;
   price?: number;
   paymentType: PaymentType;
   certificateAvailable: boolean;
   spots?: number;
+  createdById?: string;
 }
 
 export interface User {

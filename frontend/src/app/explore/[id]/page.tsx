@@ -108,7 +108,7 @@ export default function OpportunityDetails({ params }: { params: Promise<{ id: s
   };
 
   const handleApply = () => {
-    if (opportunity.registrationUrl) {
+    if (opportunity?.registrationUrl) {
       window.open(opportunity.registrationUrl, '_blank');
       setApplyState('success');
     } else {

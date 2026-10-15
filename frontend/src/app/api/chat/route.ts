@@ -95,8 +95,8 @@ export async function POST(req: Request) {
       let score = 50;
       const haystack = `${opp.title} ${opp.organization} ${opp.category} ${opp.description} ${(opp.requirements||[]).join(' ')}`.toLowerCase();
       
-      const keywords = latestUserMsg.split(/\W+/).filter(w => w.length > 2);
-      keywords.forEach(kw => {
+      const keywords = latestUserMsg.split(/\W+/).filter((w: string) => w.length > 2);
+      keywords.forEach((kw: string) => {
         if (haystack.includes(kw)) score += 15;
       });
 
