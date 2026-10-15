@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("STUDENT") // STUDENT, ADMIN, OWNER
+  status       String   @default("ACTIVE") // PENDING, APPROVED, REJECTED, ACTIVE
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  opportunities    Opportunity[]
+  applications     Application[]
+  savedOpportunities SavedOpportunity[]
+}
+
+model Opportunity {
+  id                   String              @id @default(uuid())
+  title                String
+  organization         String
+  category             String              // HACKATHON, INTERNSHIP, CERTIFICATION, WORKSTATION, OTHER_PROGRAM
+  subCategory          String?
+  description          String
+  // SQLite doesn't support String[] natively in Prisma, we'll store as JSON string or remove arrays. Let's store as simple comma-separated string for SQLite simplicity, but wait, Prisma 5 supports JSON in SQLite? No, SQLite doesn't support String[] array fields.
+  // Instead of String[], I will just use a String that stores JSON stringified arrays.
+  requirements         String[]
+  benefits             String[]
+  startDate            DateTime
+  endDate              DateTime?
+  applicationDeadline  DateTime
+  duration             String?
+  mode                 String              // ONLINE, OFFLINE, HYBRID
+  location             String?
+  registrationUrl      String?             // URL to redirect users to when they click Apply
+  price                Float?
+  paymentType          String?             // UNPAID, PAID, STIPEND, FREE
+  certificateAvailable Boolean             @default(false)
+  spots                Int?
+  
+  createdById          String
+  createdBy            User                @relation(fields: [createdById], references: [id])
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+
+  applications         Application[]
+  savedBy              SavedOpportunity[]
+}
+
+model Application {
+  id            String            @id @default(uuid())
+  status        String            @default("PENDING") // PENDING, ACCEPTED, REJECTED, WITHDRAWN
+  appliedAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  studentId     String
+  student       User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  opportunityId String
+  opportunity   Opportunity       @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, opportunityId])
+}
+
+model SavedOpportunity {
+  id            String      @id @default(uuid())
+  savedAt       DateTime    @default(now())
+
+  studentId     String
+  student       User        @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  opportunityId String
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, opportunityId])
+}
