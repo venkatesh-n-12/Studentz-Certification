@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import prisma from '../config/db';
-import { signupSchema, loginSchema } from '../validators/auth.validator';
+import { signupSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema } from '../validators/auth.validator';
 
 export const signup = (role: string) => async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -128,3 +128,72 @@ export const getMe = async (req: any, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+
+export const forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email } = forgotPasswordSchema.parse(req.body);
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'No account found with this email address'
+      });
+    }
+
+    // Generate a secure reset token valid for 1 hour
+    const resetToken = jwt.sign(
+      { id: user.id, email: user.email, purpose: 'password_reset' },
+      process.env.JWT_SECRET as string,
+      { expiresIn: '1h' }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Account verified. You can now set your new password.',
+      resetToken,
+      email: user.email
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resetPassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, newPassword } = resetPasswordSchema.parse(req.body);
+    const { resetToken } = req.body;
+
+    if (resetToken) {
+      try {
+        const decoded: any = jwt.verify(resetToken, process.env.JWT_SECRET as string);
+        if (decoded.email !== email || decoded.purpose !== 'password_reset') {
+          return res.status(400).json({ success: false, message: 'Invalid or expired reset token' });
+        }
+      } catch (e) {
+        return res.status(400).json({ success: false, message: 'Reset session has expired. Please request again.' });
+      }
+    }
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash(newPassword, salt);
+
+    await prisma.user.update({
+      where: { email },
+      data: { passwordHash }
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset successful! You can now log in with your new password.'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+

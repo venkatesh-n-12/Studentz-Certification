@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
@@ -32,8 +33,20 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-xl font-bold tracking-tight text-white">
-              Studentz<span className="text-zinc-400">Cert</span>
+            <Link href="/" className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-white group">
+              <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-white/10 bg-[#060713] p-0.5 group-hover:border-indigo-500/50 transition-colors shadow-sm">
+                <Image
+                  src="/logo-icon.png"
+                  alt="Studentz Certification"
+                  width={32}
+                  height={32}
+                  className="object-contain w-full h-full"
+                  priority
+                />
+              </div>
+              <span>
+                Studentz<span className="text-zinc-400 font-normal">Cert</span>
+              </span>
             </Link>
           </div>
 

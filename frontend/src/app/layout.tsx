@@ -17,8 +17,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Studentz Certification",
-  description: "Discover Opportunities. Build Your Future.",
+  title: "Studentz Certification — One Platform. Every Opportunity.",
+  description: "One Platform. Every Opportunity. Discover hackathons, internships, certifications, and student opportunities across India.",
+  icons: {
+    icon: [
+      { url: '/logo-icon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo-icon.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: '/logo-icon.png',
+  },
 };
 
 export default function RootLayout({

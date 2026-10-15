@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { Check, X, Trash2, Users, UserPlus } from 'lucide-react';
 import { API_BASE_URL } from '@/config/api';
 
@@ -95,9 +96,20 @@ export default function OwnerDashboard() {
     <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto space-y-12">
         
-        <div>
-          <h1 className="text-4xl font-bold text-white mb-2">Owner Dashboard</h1>
-          <p className="text-zinc-400">Manage platform administrators and requests.</p>
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl overflow-hidden border border-white/10 bg-[#060713] p-1 shadow-md shrink-0">
+            <Image
+              src="/logo-icon.png"
+              alt="Studentz Certification"
+              width={56}
+              height={56}
+              className="object-contain w-full h-full"
+            />
+          </div>
+          <div>
+            <h1 className="text-4xl font-bold text-white mb-1">Owner Dashboard</h1>
+            <p className="text-zinc-400">Studentz Certification · Master Administration Portal</p>
+          </div>
         </div>
 
         {/* Pending Requests */}

@@ -1,12 +1,29 @@
 import { CheckCircle, Target, Users, Zap } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen pt-12 pb-24">
       {/* Hero */}
-      <section className="text-center mb-20 px-4">
-        <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6">About StudentzCert</h1>
+      <section className="text-center mb-20 px-4 flex flex-col items-center">
+        <div className="relative mb-6 group">
+          <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl blur-xl opacity-40 group-hover:opacity-70 transition duration-500"></div>
+          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-3xl overflow-hidden border border-white/15 bg-[#060713] p-2 shadow-2xl flex items-center justify-center">
+            <Image
+              src="/logo.png"
+              alt="Studentz Certification Logo"
+              width={128}
+              height={128}
+              className="object-contain w-full h-full"
+              priority
+            />
+          </div>
+        </div>
+        <div className="inline-block px-4 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs sm:text-sm font-semibold mb-4 tracking-wide">
+          One Platform. Every Opportunity.
+        </div>
+        <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6">About Studentz Certification</h1>
         <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
           Studentz Certification is a student-focused platform that helps students discover valuable opportunities such as hackathons, internships, certifications, workstations and other programs.
         </p>

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -8,9 +9,23 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
-            <Link href="/" className="text-xl font-bold tracking-tight text-white inline-block mb-4">
-              Studentz<span className="text-zinc-400">Cert</span>
+            <Link href="/" className="inline-flex items-center gap-2.5 text-xl font-bold tracking-tight text-white mb-4 group">
+              <div className="w-8 h-8 rounded-lg overflow-hidden border border-white/10 bg-[#060713] p-0.5 group-hover:border-indigo-500/50 transition-colors shadow-sm">
+                <Image
+                  src="/logo-icon.png"
+                  alt="Studentz Certification"
+                  width={32}
+                  height={32}
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              <span>
+                Studentz<span className="text-zinc-400 font-normal">Cert</span>
+              </span>
             </Link>
+            <p className="text-sm font-medium text-indigo-400 mb-1">
+              One Platform. Every Opportunity.
+            </p>
             <p className="text-sm text-zinc-400 leading-relaxed">
               Discover opportunities. Build your future.<br />
               The premium platform for students in India.

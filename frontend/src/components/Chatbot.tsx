@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   MessageCircle, X, Send, Bot, User, Loader2, Sparkles, 
   ExternalLink, Heart, Compass, Award, Briefcase, Cpu, ArrowRight
@@ -175,12 +176,24 @@ export default function Chatbot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="relative group bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white p-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center border border-white/20"
+          className="relative group bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white p-3 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center border border-white/20"
           aria-label="Open AI Assistant"
         >
-          <Sparkles className="w-6 h-6 animate-pulse" />
+          <div className="relative w-8 h-8 rounded-full overflow-hidden bg-[#060713] p-0.5 shadow-inner">
+            <Image
+              src="/logo-icon.png"
+              alt="StudentzCert AI"
+              width={32}
+              height={32}
+              className="object-contain w-full h-full"
+            />
+          </div>
+          <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-zinc-900"></span>
+          </span>
           <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-700 text-xs font-semibold text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-xl pointer-events-none">
-            ✨ AI Career Matcher
+            ✨ StudentzCert AI Advisor
           </span>
         </button>
       )}
@@ -192,8 +205,14 @@ export default function Chatbot() {
           {/* Header */}
           <div className="bg-zinc-800/90 p-3.5 px-4 flex items-center justify-between border-b border-zinc-700/80">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-md">
-                <Sparkles className="w-5 h-5 text-white" />
+              <div className="w-9 h-9 rounded-xl bg-[#060713] border border-white/10 flex items-center justify-center shadow-md p-1 overflow-hidden">
+                <Image
+                  src="/logo-icon.png"
+                  alt="StudentzCert AI"
+                  width={36}
+                  height={36}
+                  className="object-contain w-full h-full"
+                />
               </div>
               <div>
                 <h3 className="text-white font-bold text-sm flex items-center gap-1.5">
@@ -251,8 +270,14 @@ export default function Chatbot() {
                   >
                     <div className={`flex gap-2.5 max-w-[90%] ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                       {msg.sender === 'bot' && (
-                        <div className="w-7 h-7 rounded-lg bg-indigo-600/30 border border-indigo-500/30 flex-shrink-0 flex items-center justify-center mt-1">
-                          <Bot className="w-4 h-4 text-indigo-400" />
+                        <div className="w-7 h-7 rounded-lg bg-[#060713] border border-white/10 flex-shrink-0 flex items-center justify-center mt-1 overflow-hidden p-0.5 shadow-sm">
+                          <Image
+                            src="/logo-icon.png"
+                            alt="StudentzCert AI"
+                            width={24}
+                            height={24}
+                            className="object-contain w-full h-full"
+                          />
                         </div>
                       )}
                       
