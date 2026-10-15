@@ -28,7 +28,7 @@ export const getAdminRequests = async (req: Request, res: Response, next: NextFu
 export const approveAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const admin = await prisma.user.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: { status: 'ACTIVE' }
     });
     res.status(200).json({ success: true, message: 'Admin approved successfully' });
@@ -40,7 +40,7 @@ export const approveAdmin = async (req: Request, res: Response, next: NextFuncti
 export const rejectAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const admin = await prisma.user.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: { status: 'REJECTED' }
     });
     res.status(200).json({ success: true, message: 'Admin rejected successfully' });

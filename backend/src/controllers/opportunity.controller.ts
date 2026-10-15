@@ -98,7 +98,7 @@ export const getOpportunities = async (req: Request, res: Response, next: NextFu
 export const getOpportunityById = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const opportunity = await prisma.opportunity.findUnique({
-      where: { id: req.params.id }
+      where: { id: req.params.id as string }
     });
 
     if (!opportunity) {

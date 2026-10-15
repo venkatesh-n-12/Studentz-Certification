@@ -10,10 +10,11 @@ export const errorHandler = (
   console.error(err);
 
   if (err instanceof ZodError) {
+    const issues = (err as any).issues || (err as any).errors || [];
     return res.status(400).json({
       success: false,
       message: 'Validation Error',
-      errors: err.errors.map(e => ({ path: e.path.join('.'), message: e.message }))
+      errors: issues.map((e: any) => ({ path: Array.isArray(e.path) ? e.path.join('.') : String(e.path), message: e.message }))
     });
   }
 
