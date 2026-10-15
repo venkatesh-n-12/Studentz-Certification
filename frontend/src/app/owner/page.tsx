@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
 import { Check, X, Trash2, Users, UserPlus } from 'lucide-react';
+import { API_BASE_URL } from '@/config/api';
 
 export default function OwnerDashboard() {
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -32,8 +33,8 @@ export default function OwnerDashboard() {
       const headers = { 'Authorization': `Bearer ${token}` };
 
       const [adminsRes, requestsRes] = await Promise.all([
-        fetch('http://localhost:5000/api/owner/admins', { headers }),
-        fetch('http://localhost:5000/api/owner/admin-requests', { headers })
+        fetch(`${API_BASE_URL}/api/owner/admins`, { headers }),
+        fetch(`${API_BASE_URL}/api/owner/admin-requests`, { headers })
       ]);
 
       const adminsData = await adminsRes.json();
@@ -50,7 +51,7 @@ export default function OwnerDashboard() {
 
   const handleApprove = async (id: string) => {
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:5000/api/owner/admin-requests/${id}/approve`, {
+    await fetch(`${API_BASE_URL}/api/owner/admin-requests/${id}/approve`, {
       method: 'PATCH',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -59,7 +60,7 @@ export default function OwnerDashboard() {
 
   const handleReject = async (id: string) => {
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:5000/api/owner/admin-requests/${id}/reject`, {
+    await fetch(`${API_BASE_URL}/api/owner/admin-requests/${id}/reject`, {
       method: 'PATCH',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -70,7 +71,7 @@ export default function OwnerDashboard() {
     if (!confirm('Are you sure you want to delete this admin permanently?')) return;
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/owner/admins/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/owner/admins/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

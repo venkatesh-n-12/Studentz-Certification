@@ -10,6 +10,7 @@ import { Opportunity } from '@/types';
 import Link from 'next/link';
 import { mockOpportunities } from '@/data/mockData';
 import { isOpportunitySaved, toggleOpportunitySave, subscribeToBookmarks } from '@/utils/bookmarkService';
+import { API_BASE_URL } from '@/config/api';
 
 export default function OpportunityDetails({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = use(params);
@@ -46,7 +47,7 @@ export default function OpportunityDetails({ params }: { params: Promise<{ id: s
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 6000);
 
-    fetch(`http://localhost:5000/api/opportunities/${id}`, { signal: controller.signal })
+    fetch(`${API_BASE_URL}/api/opportunities/${id}`, { signal: controller.signal })
       .then(res => res.json())
       .then(data => {
         clearTimeout(timeout);
@@ -133,7 +134,7 @@ export default function OpportunityDetails({ params }: { params: Promise<{ id: s
     setIsUpdating(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/opportunities/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/opportunities/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -165,7 +166,7 @@ export default function OpportunityDetails({ params }: { params: Promise<{ id: s
     
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/opportunities/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/opportunities/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

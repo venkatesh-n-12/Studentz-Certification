@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { notFound, useRouter } from 'next/navigation';
 import { PlusCircle, Link as LinkIcon, CheckCircle } from 'lucide-react';
+import { API_BASE_URL } from '@/config/api';
 
 export default function CreateEventPage() {
   const router = useRouter();
@@ -73,7 +74,7 @@ export default function CreateEventPage() {
         applicationDeadline: new Date(formData.applicationDeadline).toISOString(),
       };
 
-      const res = await fetch('http://localhost:5000/api/opportunities', {
+      const res = await fetch(`${API_BASE_URL}/api/opportunities`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

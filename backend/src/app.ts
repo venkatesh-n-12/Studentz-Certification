@@ -22,7 +22,21 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Health check
+// Root & Health check
+app.get('/', (req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: '🚀 Studentz Certification API is running successfully',
+    health: '/api/health',
+    endpoints: {
+      auth: '/api/auth',
+      opportunities: '/api/opportunities',
+      applications: '/api/applications',
+      users: '/api/users'
+    }
+  });
+});
+
 app.get('/api/health', (req: Request, res: Response) => {
   res.status(200).json({
     success: true,

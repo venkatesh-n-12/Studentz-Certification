@@ -1,4 +1,5 @@
 import { Opportunity } from '@/types';
+import { API_BASE_URL } from '@/config/api';
 
 const STORAGE_KEY = 'studentzcert_saved_opps';
 const EVENT_KEY = 'studentzcert_bookmarks_changed';
@@ -52,7 +53,7 @@ export async function toggleOpportunitySave(opp: Opportunity): Promise<boolean> 
   try {
     const token = localStorage.getItem('token');
     if (token) {
-      const url = `http://localhost:5000/api/opportunities/${opp.id}/save`;
+      const url = `${API_BASE_URL}/api/opportunities/${opp.id}/save`;
       await fetch(url, {
         method: newState ? 'POST' : 'DELETE',
         headers: {
@@ -76,7 +77,7 @@ export async function syncSavedWithBackend(): Promise<void> {
   if (!token) return;
 
   try {
-    const res = await fetch('http://localhost:5000/api/users/me/saved', {
+    const res = await fetch(`${API_BASE_URL}/api/users/me/saved`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const data = await res.json();

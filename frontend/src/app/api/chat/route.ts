@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/config/api';
 
 const SYSTEM_INSTRUCTIONS = `You are the StudentzCert AI Assistant & Skill Matcher, an expert career advisor for university students.
 The platform features verified Hackathons, Internships, Certifications, Workstations, and Programs.
@@ -22,7 +23,7 @@ export async function POST(req: Request) {
     // Fetch live opportunities from the backend to give the model real context
     let liveOpportunities: any[] = [];
     try {
-      const oppRes = await fetch('http://localhost:5000/api/opportunities?limit=50', { cache: 'no-store' });
+      const oppRes = await fetch(`${API_BASE_URL}/api/opportunities?limit=50`, { cache: 'no-store' });
       const oppData = await oppRes.json();
       if (oppData && oppData.success && Array.isArray(oppData.data)) {
         liveOpportunities = oppData.data;

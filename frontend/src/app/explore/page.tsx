@@ -9,6 +9,7 @@ import DatePicker from '@/components/DatePicker';
 import { mockOpportunities } from '@/data/mockData';
 import { Category, Opportunity } from '@/types';
 import { getSavedOpportunities, getSavedIds, subscribeToBookmarks } from '@/utils/bookmarkService';
+import { API_BASE_URL } from '@/config/api';
 
 const CATEGORIES: Category[] = [
   'Hackathons',
@@ -70,7 +71,7 @@ function ExploreContent() {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 6000);
 
-    fetch('http://localhost:5000/api/opportunities?limit=100', { signal: controller.signal })
+    fetch(`${API_BASE_URL}/api/opportunities?limit=100`, { signal: controller.signal })
       .then(res => res.json())
       .then(data => {
         clearTimeout(timeout);
